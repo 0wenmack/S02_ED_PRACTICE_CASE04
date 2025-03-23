@@ -6,7 +6,7 @@ TEXT = "MODE:\nType 1 for Manual number of heads input\nType 2 for Random Genera
 def max_strength(n):
     """
     Calculates the maximum power of a dragon flock with n heads,
-    if optimal decomposition predominantly includes 3s.
+    if the optimal decomposition predominantly includes 3s.
     In case of n <= 3 returns n since theres no gains.
     """
     if n <= 3:
