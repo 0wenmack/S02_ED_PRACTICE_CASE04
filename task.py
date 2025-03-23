@@ -21,6 +21,32 @@ def max_strength(n):
     else:  # r == 2
         return (3 ** q) * 2
 
+def max_strength_dp(n):
+    """
+    Calculates the maximum power of a dragon flock with n heads,
+    where every dragon can have from 1 to 7 heads.
+    dp[i] stores the maximum obtainable product by
+    decomposing number i into terms each not greater than 7.
+    """
+    # Initialize array dp, dp[0] = 1 (empty decomposition)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+
+    # Calculate dp[i] for i from 1 to n
+    for i in range(1, n + 1):
+        best = 0
+        # If i <= 7 we can consider not to decompose number i
+        # which corresponds to the power of a one dragon with i heads
+        if i <= 7:
+            best = i
+        # Go through all the possible terms j from 1 to min(i, 7)
+        for j in range(1, min(i, 7) + 1):
+            candidate = dp[i - j] * j
+            if candidate > best:
+                best = candidate
+        dp[i] = best
+    return dp[n]
+
 def generate_number(lower_bound=0, upper_bound=99):
     return random.randint(lower_bound, upper_bound)
 
@@ -38,5 +64,6 @@ if __name__ == "__main__":
         
     if (N<100 and N>0):
         print("Max flock power of", N, "heads:", max_strength(N))
+        print("Max flock power of", N, "heads:", max_strength_dp(N), "DYNAMIC PROGRAMMING")
     else:
         print("OUT OF BOUNDS N VALUE! 0 < N < 100")
